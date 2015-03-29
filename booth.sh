@@ -28,7 +28,7 @@ function countdown {
 
 eog --single-window ./slides/start.png -f &
 sleep 1
-wmctrl -a 'abeverley@andy-laptop: ~/git/photobooth'
+wmctrl -a 'andrew@andrew-desktop: ~/photobooth'
 read -n 1 -p "press any key!"
 # rm *.jpg
 
@@ -51,6 +51,10 @@ eog --single-window ./slides/loading.png -f &
 rm -f photo.jpg
 mogrify -path . -format JPG -resize 50% $file1 $file2 $file3 $file4
 montage -mode concatenate -tile 2x2 $file1 $file2 $file3 $file4 photo.jpg
+montage=`mktemp photos/XXXXXXXX.jpg`
+cp photo.jpg $montage
+scp $montage makertribe@192.168.1.110:~/photobooth/
+scp photo.jpg photobooth@192.168.1.101:~/photobooth/
 
 eog --single-window photo.jpg -f &
 # scp photo.jpg mark@192.168.0.104:/home/mark/Desktop &
